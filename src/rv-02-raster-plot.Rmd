@@ -1,17 +1,17 @@
 ---
 title: "Plot Raster Data in R"
 keypoints:
-- Continuous data ranges can be grouped into categories using `mutate()` and `cut()`.
-- Use built-in `terrain.colors()` or set your preferred color scheme manually.
-- Layer rasters on top of one another by using the `alpha` aesthetic.
+- "Continuous data ranges can be grouped into categories using `mutate()` and `cut()`."
+- "Use built-in `terrain.colors()` or set your preferred color scheme manually."
+- "Layer rasters on top of one another by using the `alpha` aesthetic."
 objectives:
-- Build customized plots for a single band raster using the `ggplot2` package.
-- Layer a raster dataset on top of a hillshade to create an elegant basemap.
+- "Build customized plots for a single band raster using the `ggplot2` package."
+- "Layer a raster dataset on top of a hillshade to create an elegant basemap."
 output: pdf_document
 questions:
-- How can I create categorized or customized maps of raster data?
-- How can I customize the color scheme of a raster image?
-- How can I layer raster data in a single image?
+- "How can I create categorized or customized maps of raster data?"
+- "How can I customize the color scheme of a raster image?"
+- "How can I layer raster data in a single image?"
 source: Rmd
 teaching: 40
 exercises: 20
@@ -38,10 +38,10 @@ DSM_HARV <- raster("../data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCro
 DSM_HARV_df <- as.data.frame(DSM_HARV, xy = TRUE)
 ```
 
-> ## Things You’ll Need To Complete This Episode
-> See the [lesson homepage]({{ site.baseurl }}) for detailed information about the software,
-> data, and other prerequisites you will need to work through the examples in this episode.
-{: .prereq}
+## Things You’ll Need To Complete This Episode
+See the [lesson homepage]({{ site.baseurl }}) for detailed information about the software,
+data, and other prerequisites you will need to work through the examples in this episode.
+
 
 ## Plot Raster Data in R
 This episode covers how to plot a raster in R using the `ggplot2`
@@ -96,11 +96,9 @@ DSM_HARV_df <- DSM_HARV_df %>%
 unique(DSM_HARV_df$fct_elevation_2)
 ```
 
-> ## Data Tips
-> Note that when we assign break values a set of 4 values will result in 3 bins of data.
->
-> The bin intervals are shown using `(` to mean exclusive and `]` to mean inclusive. For example: `(305, 342]` means "from 306 through 342".
-{: .callout}
+## Data Tips
+Note that when we assign break values a set of 4 values will result in 3 bins of data.
+The bin intervals are shown using `(` to mean exclusive and `]` to mean inclusive. For example: `(305, 342]` means "from 306 through 342".
 
 And now we can plot our bar plot again, using the new groups:
 
@@ -350,4 +348,3 @@ Make sure to:
      ggtitle("DTM with Hillshade") +
      coord_quickmap()
 ```
-{% include links.md %}

@@ -92,25 +92,29 @@ interactive R console.
    * You will be able to run the file you create from within RStudio
    or using R's `source()`  function.
 
-> ## Tip: Running segments of your code
->
-> RStudio offers you great flexibility in running code from within the editor
-> window. There are buttons, menu choices, and keyboard shortcuts. To run the
-> current line, you can 
->
-> 1. click on the `Run` button above the editor panel, or 
-> 2. select "Run Lines" from the "Code" menu, or 
-> 3. hit <kbd>Ctrl</kbd>+<kbd>Enter</kbd> in Windows,
-> <kbd>Ctrl</kbd>+<kbd>Return</kbd> in Linux, 
-> or <kbd>&#8984;</kbd>+<kbd>Return</kbd> on OS X.
-> (This shortcut can also be seen by hovering
-> the mouse over the button). To run a block of code, select it and then `Run`.
-> If you have modified a line of code within a block of code you have just run,
-> there is no need to reselect the section and `Run`, you can use the next
-> button
-> along, `Re-run the previous region`. This will run the previous code block
-> including the modifications you have made.
-{: .callout}
+## Tip: Running segments of your code
+
+RStudio offers you great flexibility in running code from within the editor
+window. There are buttons, menu choices, and keyboard shortcuts. To run the
+current line, you can 
+
+1. click on the `Run` button above the editor panel, or 
+
+2. select "Run Lines" from the "Code" menu, or 
+
+3. hit <kbd>Ctrl</kbd>+<kbd>Enter</kbd> in Windows,
+
+<kbd>Ctrl</kbd>+<kbd>Return</kbd> in Linux, 
+
+or <kbd>&#8984;</kbd>+<kbd>Return</kbd> on OS X.
+
+(This shortcut can also be seen by hovering
+the mouse over the button). To run a block of code, select it and then `Run`.
+If you have modified a line of code within a block of code you have just run,
+there is no need to reselect the section and `Run`, you can use the next
+button along, `Re-run the previous region`. This will run the previous code block
+including the modifications you have made.
+
 
 ## Introduction to R
 
@@ -142,32 +146,21 @@ output.
 Like bash, if you type in an incomplete command, R will wait for you to
 complete it:
 
-~~~
-> 1 +
-~~~
-{: .language-r}
-
-~~~
-+
-~~~
-{: .output}
-
 Any time you hit return and the R session shows a "`+`" instead of a "`>`", it
 means it's waiting for you to complete the command. If you want to cancel a
 command you can simply hit "<kbd>Esc</kbd>" and RStudio will give you back the "`>`" prompt.
 
-> ## Tip: Cancelling commands
->
-> If you're using R from the command line instead of from within RStudio,
-> you need to use <kbd>Ctrl</kbd>+<kbd>C</kbd> instead of <kbd>Esc</kbd>
-> to cancel the command. This applies to Mac users as well!
->
-> Cancelling a command isn't only useful for killing incomplete commands:
-> you can also use it to tell R to stop running code (for example if it's
-> taking much longer than you expect), or to get rid of the code you're
-> currently writing.
->
-{: .callout}
+## Tip: Cancelling commands
+
+If you're using R from the command line instead of from within RStudio,
+you need to use <kbd>Ctrl</kbd>+<kbd>C</kbd> instead of <kbd>Esc</kbd>
+to cancel the command. This applies to Mac users as well!
+
+Cancelling a command isn't only useful for killing incomplete commands:
+you can also use it to tell R to stop running code (for example if it's
+taking much longer than you expect), or to get rid of the code you're
+currently writing.
+
 
 When using R as a calculator, the order of operations is the same as you
 would have learned back in school.
@@ -264,25 +257,24 @@ We can also do comparison in R:
 1 >= -9 # greater than or equal to
 ```
 
-> ## Tip: Comparing Numbers
->
-> A word of warning about comparing numbers: you should
-> never use `==` to compare two numbers unless they are
-> integers (a data type which can specifically represent
-> only whole numbers).
->
-> Computers may only represent decimal numbers with a
-> certain degree of precision, so two numbers which look
-> the same when printed out by R, may actually have
-> different underlying representations and therefore be
-> different by a small margin of error (called Machine
-> numeric tolerance).
->
-> Instead you should use the `all.equal` function.
->
-> Further reading: [http://floating-point-gui.de/](http://floating-point-gui.de/)
->
-{: .callout}
+## Tip: Comparing Numbers
+
+A word of warning about comparing numbers: you should
+never use `==` to compare two numbers unless they are
+integers (a data type which can specifically represent
+only whole numbers).
+
+Computers may only represent decimal numbers with a
+certain degree of precision, so two numbers which look
+the same when printed out by R, may actually have
+different underlying representations and therefore be
+different by a small margin of error (called Machine
+numeric tolerance).
+
+Instead you should use the `all.equal` function.
+
+Further reading: [http://floating-point-gui.de/](http://floating-point-gui.de/)
+
 
 ## Variables and assignment
 
@@ -327,59 +319,62 @@ y <- x * 2
 The right hand side of the assignment can be any valid R expression.
 The right hand side is *fully evaluated* before the assignment occurs.
 
-> ## Challenge 1
->
-> What will be the value of each  variable  after each
-> statement in the following program?
->
-> ```{r, eval=FALSE}
-> mass <- 47.5
-> age <- 122
-> mass <- mass * 2.3
-> age <- age - 20
-> ```
->
-> > ## Solution to challenge 1
-> >
-> > ```{r ch2pt1-sol}
-> > mass <- 47.5
-> > ```
-> > This will give a value of `r mass` for the variable mass
-> >
-> > ```{r ch2pt2-sol}
-> > age <- 122
-> > ```
-> > This will give a value of `r age` for the variable age
-> >
-> > ```{r ch2pt3-sol}
-> > mass <- mass * 2.3
-> > ```
-> > This will multiply the existing value of `r mass/2.3` by 2.3 to give a new value of
-> > `r mass` to the variable mass.
-> >
-> > ```{r ch2pt4-sol}
-> > age <- age - 20
-> > ```
-> > This will subtract 20 from the existing value of `r age + 20 ` to give a new value
-> > of `r age` to the variable age.
-> {: .solution}
-{: .challenge}
+## Challenge 1
+
+What will be the value of each  variable  after each
+statement in the following program?
+
+```{r, eval=FALSE}
+mass <- 47.5
+age <- 122
+mass <- mass * 2.3
+age <- age - 20
+```
+
+## Solution to challenge 1
+
+```{r ch2pt1-sol}
+mass <- 47.5
+```
+
+This will give a value of `r mass` for the variable mass
+
+```{r ch2pt2-sol}
+age <- 122
+```
+
+This will give a value of `r age` for the variable age
+
+```{r ch2pt3-sol}
+mass <- mass * 2.3
+```
+
+This will multiply the existing value of `r mass/2.3` by 2.3 to give a new value of
+`r mass` to the variable mass.
+
+```{r ch2pt4-sol}
+age <- age - 20
+```
+
+This will subtract 20 from the existing value of `r age + 20 ` to give a new value
+of `r age` to the variable age.
 
 
-> ## Challenge 2
->
-> Run the code from the previous challenge, and write a command to
-> compare mass to age. Is mass larger than age?
->
-> > ## Solution to challenge 2
-> >
-> > One way of answering this question in R is to use the `>` to set up the following:
-> > ```{r ch3-sol}
-> > mass > age
-> >```
-> > This should yield a boolean value of TRUE since `r mass` is greater than `r age`.
-> {: .solution}
-{: .challenge}
+## Challenge 2
+
+Run the code from the previous challenge, and write a command to
+compare mass to age. Is mass larger than age?
+
+## Solution to challenge 2
+
+One way of answering this question in R is to use the `>` to set up the following:
+
+```{r ch3-sol}
+mass > age
+```
+
+This should yield a boolean value of TRUE since `r mass` is greater than `r age`.
+
 
 
 Variable names can contain letters, numbers, underscores and periods. They

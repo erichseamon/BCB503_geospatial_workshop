@@ -165,5 +165,3 @@ be using RStudio throughout this workshop.
 Traditional GIS apps are also moving back towards providing a scripting environment for
 users, further blurring the CLI/GUI divide. ESRI have adopted Python into their
 software, and QGIS is both Python and R-friendly.
-
-{% include links.md %}
