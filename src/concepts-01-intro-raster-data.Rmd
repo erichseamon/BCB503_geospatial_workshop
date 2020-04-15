@@ -20,7 +20,7 @@ source: Rmd
 
 ```{r, include=FALSE}
 source("../bin/chunk-options.R")
-source("../setup.R")
+#source("../setup.R")
 knitr_fig_path("01-")
 ```
 
@@ -33,7 +33,7 @@ library(ggplot2)
 ```{r, results = 'hide', echo = FALSE, message = FALSE}
 # load data needed to generate figures
 # for demonstration only - learners do not need this data for this lesson
-DSM_HARV <- raster("data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif")
+DSM_HARV <- raster("../data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif")
 
 # convert to a df for plotting
 DSM_HARV_df <- as.data.frame(DSM_HARV, xy = TRUE)
@@ -236,7 +236,7 @@ We can plot each band of a multi-band image individually.
 ```{r demonstrate-RGB-Image, echo=FALSE}
 library(raster)
 # Use stack function to read in all bands
-RGB_stack_HARV <- stack("data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_RGB_Ortho.tif")
+RGB_stack_HARV <- stack("../data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_RGB_Ortho.tif")
 
 names(RGB_stack_HARV) <- c("Red Band", "Green Band", "Blue Band")
 
