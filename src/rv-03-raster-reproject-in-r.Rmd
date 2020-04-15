@@ -89,8 +89,7 @@ ggplot() +
 
 Our results are curious - neither the Digital Terrain Model (`DTM_HARV_df`) 
 nor the DTM Hillshade (`DTM_hill_HARV_df`) plotted.
-Let's try to
-plot the DTM on its own to make sure there are data there.
+Let's try to plot the DTM on its own to make sure there are data there.
 
 ```{r plot-DTM }
 ggplot() +
@@ -115,12 +114,10 @@ geom_raster(data = DTM_hill_HARV_df,
 
 If we look at the axes, we can see that the projections of the two rasters are different.
 When this is the case, `ggplot` won't render the image. It won't even
-throw an error message to tell you something has gone wrong. We can look at Coordinate Reference Systems (CRSs) of the DTM and
-the hillshade data to see how they differ.
+throw an error message to tell you something has gone wrong. We can look at Coordinate Reference Systems (CRSs) of the DTM and the hillshade data to see how they differ.
 
 ## Exercise
-View the CRS for each of these two datasets. What projection
-does each use?
+View the CRS for each of these two datasets. What projection does each use?
 
 ## Solution
 
@@ -146,10 +143,7 @@ for the raster object that you want to reproject. It cannot be used if no
 CRS is defined. Lucky for us, the `DTM_hill_HARV` has a defined CRS.
 
 ## Data Tip
-When we reproject a raster, we
-move it from one "grid" to another. Thus, we are modifying the data! Keep this
-in mind as we work with raster data.
-
+When we reproject a raster, we move it from one "grid" to another. Thus, we are modifying the data! Keep this in mind as we work with raster data.
 
 To use the `projectRaster()` function, we need to define two things:
 
@@ -171,8 +165,7 @@ DTM_hill_UTMZ18N_HARV <- projectRaster(DTM_hill_HARV,
                                        crs = crs(DTM_HARV))
 ```
 
-Now we can compare the CRS of our original DTM hillshade
-and our new DTM hillshade, to see how they are different.
+Now we can compare the CRS of our original DTM hillshade and our new DTM hillshade, to see how they are different.
 
 ```{r}
 crs(DTM_hill_UTMZ18N_HARV)
@@ -209,8 +202,7 @@ res(DTM_hill_UTMZ18N_HARV)
 res(DTM_hill_HARV)
 ```
 
-These two resolutions are different, but they're representing the same data. We can tell R to force our
-newly reprojected raster to be 1m x 1m resolution by adding a line of code
+These two resolutions are different, but they're representing the same data. We can tell R to force our newly reprojected raster to be 1m x 1m resolution by adding a line of code
 (`res=`) within the `projectRaster()` function.
 
 ```{r reproject-assign-resolution}
@@ -220,6 +212,7 @@ DTM_hill_UTMZ18N_HARV <- projectRaster(DTM_hill_HARV,
 ```
 
 Let's double-check our resolution to be sure
+
 ```{r}
 res(DTM_hill_UTMZ18N_HARV)
 res(DTM_hill_HARV)
@@ -255,6 +248,7 @@ hillshade to produce a nice looking, textured map!
 Reproject the data as necessary to make things line up!
 
 ## Answers
+
 ```{r challenge-code-reprojection, echo=TRUE}
  # import DSM
  DSM_SJER <- raster("data/NEON-DS-Airborne-Remote-Sensing/SJER/DSM/SJER_dsmCrop.tif")

@@ -18,7 +18,7 @@ source: Rmd
 
 ```{r setup, echo=FALSE}
 source("../bin/chunk-options.R")
-source("../setup.R")
+#source("../setup.R")
 knitr_fig_path("14-")
 ```
 
@@ -32,7 +32,7 @@ library(dplyr)
 ```{r load-data, echo = FALSE, results = 'hide'}
 # learners will have this data loaded from the previous episode
 
-all_NDVI_HARV <- list.files("data/NEON-DS-Landsat-NDVI/HARV/2011/NDVI", full.names = TRUE, pattern = ".tif$")
+all_NDVI_HARV <- list.files("../data/NEON-DS-Landsat-NDVI/HARV/2011/NDVI", full.names = TRUE, pattern = ".tif$")
 
 # Create a time series raster stack
 NDVI_HARV_stack <- stack(all_NDVI_HARV)
@@ -41,10 +41,9 @@ NDVI_HARV_stack <- stack(all_NDVI_HARV)
 NDVI_HARV_stack <- NDVI_HARV_stack/10000
 ```
 
-> ## Things You’ll Need To Complete This Episode
-> See the [lesson homepage]({{ site.baseurl }}) for detailed information about the software,
-> data, and other prerequisites you will need to work through the examples in this episode.
-{: .prereq}
+## Things You’ll Need To Complete This Episode
+See the [lesson homepage]({{ site.baseurl }}) for detailed information about the software,
+data, and other prerequisites you will need to work through the examples in this episode.
 
 In this episode, we will extract NDVI values from a
 raster time series dataset and plot them using the
@@ -69,6 +68,7 @@ is associated with the name of raster stack it was derived from.
 ```{r}
 avg_NDVI_HARV <- cellStats(NDVI_HARV_stack, mean)
 avg_NDVI_HARV
+
 ```
 
 We can then convert our output to a data frame using `as.data.frame()`. It's a good

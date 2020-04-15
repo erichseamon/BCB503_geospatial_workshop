@@ -242,19 +242,16 @@ them using efficient processing methods. The syntax is
 `outputRaster <- overlay(raster1, raster2, fun=functionName)`
 
 ## Data Tip
-If the rasters are stacked and stored
-as `RasterStack` or `RasterBrick` objects in R, then we should use `calc()`.
-`overlay()` will not work on stacked rasters.
+
+If the rasters are stacked and stored as `RasterStack` or `RasterBrick` objects in R, then we should use `calc()`. `overlay()` will not work on stacked rasters.
 
 Let's perform the same subtraction calculation that we calculated above using
 raster math, using the `overlay()` function.
 
 ## Data Tip
 
-A custom function consists of a defined
-set of commands performed on a input object. Custom functions are particularly
-useful for tasks that need to be repeated over and over in the code. A
-simplified syntax for writing a custom function in R is:
+A custom function consists of a defined set of commands performed on a input object. Custom functions are particularly useful for tasks that need to be repeated over and over in the code. A simplified syntax for writing a custom function in R is:
+
 `function_name <- function(variable1, variable2) { WhatYouWantDone, WhatToReturn}`
 
 
@@ -287,8 +284,7 @@ function compare?
 ## Export a GeoTIFF
 
 Now that we've created a new raster, let's export the data as a GeoTIFF
-file using
-the `writeRaster()` function.
+file using the `writeRaster()` function.
 
 When we write this raster object to a GeoTIFF file we'll name it
 `CHM_HARV.tiff`. This name allows us to quickly remember both what the data

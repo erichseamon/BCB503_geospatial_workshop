@@ -19,7 +19,7 @@ source: Rmd
 
 ```{r setup, echo=FALSE}
 source("../bin/chunk-options.R")
-source("../setup.R")
+#source("../setup.R")
 knitr_fig_path("08-")
 ```
 
@@ -41,14 +41,16 @@ CHM_HARV_df <- as.data.frame(CHM_HARV, xy = TRUE)
 road_colors <- c("blue", "green", "navy", "purple")
 ```
 
-> ## Things You’ll Need To Complete This Episode
->
-> See the [lesson homepage]({{ site.baseurl }}) for detailed information about the software,
-> data, and other prerequisites you will need to work through the examples in this episode.
-{: .prereq}
+## Things You’ll Need To Complete This Episode
 
-This episode builds upon
+See the [lesson homepage]({{ site.baseurl }}) for detailed information about the software,
+data, and other prerequisites you will need to work through the examples in this episode.
+
+
+This episode builds upon 
+
 [the previous episode]({{ site.baseurl }}/07-vector-shapefile-attributes-in-r/)
+
 to work with shapefile attributes in R and explores how to plot multiple
 shapefiles. It also covers how to plot raster and vector data together
 on the same plot.
@@ -63,6 +65,7 @@ We will continue to work with the three shapefiles that we loaded in the
 [Open and Plot Shapefiles in R]({{site.baseurl}}/06-vector-open-shapefile-in-r/) episode.
 
 ## Plotting Multiple Shapefiles
+
 In the [previous episode]({{ site.baseurl }}/07-vector-shapefile-attributes-in-r/),
 we learned how to plot information from a single shapefile and do
 some plot customization including adding a custom legend. However,
@@ -115,10 +118,9 @@ ggplot() +
 
 Finally, it might be better if the points were symbolized as a symbol. We can customize this using `shape` parameters in our call to `geom_sf`: 16 is a point symbol, 15 is a box.
 
-> ## Data Tip
-> To view a short list of `shape` symbols,
-> type `?pch` into the R console.
-{: .callout}
+## Data Tip
+To view a short list of `shape` symbols,
+type `?pch` into the R console.
 
 
 ```{r custom-symbols}
@@ -133,96 +135,90 @@ ggplot() +
   coord_sf()
 ```
 
-> ## Challenge: Plot Polygon by Attribute
-> 
-> 1. Using the `NEON-DS-Site-Layout-Files/HARV/PlotLocations_HARV.shp` shapefile,
-> create a map of study plot locations, with each point colored by the soil type
-> (`soilTypeOr`). How many different soil types are there at this particular field
-> site? Overlay this layer on top of the `lines_HARV` layer (the roads). Create a
-> custom legend that applies line symbols to lines and point symbols to the points.
-> 
-> 2. Modify the plot above. Tell R to plot each point, using a different
+## Challenge: Plot Polygon by Attribute
+
+1. Using the `NEON-DS-Site-Layout-Files/HARV/PlotLocations_HARV.shp` shapefile,
+create a map of study plot locations, with each point colored by the soil type
+(`soilTypeOr`). How many different soil types are there at this particular field
+site? Overlay this layer on top of the `lines_HARV` layer (the roads). Create a
+custom legend that applies line symbols to lines and point symbols to the points.
+
+2. Modify the plot above. Tell R to plot each point, using a different
 symbol of `shape` value.
-> 
-> > ## Answers
-> >
-> > First we need to read in the data and see how many
-> > unique soils are represented in the `soilTypeOr` attribute.
-> >
-> > ```{r}
-> > plot_locations <- st_read("data/NEON-DS-Site-Layout-Files/HARV/PlotLocations_HARV.shp")
-> >
-> > levels(plot_locations$soilTypeOr)
-> > ```
-> >
-> > Next we can create a new color palette with one color for
-> > each soil type.
-> >
-> > ```{r}
-> > blue_green <- c("blue", "darkgreen")
-> > ```
-> >
-> > Finally, we will create our plot.
-> >
-> > ```{r harv-plot-locations-bg}
-> > ggplot() + 
-> >   geom_sf(data = lines_HARV, aes(color = TYPE), show.legend = "line") + 
-> >   geom_sf(data = plot_locations, aes(fill = soilTypeOr), 
-> >           shape = 21, color = NA, show.legend = 'point') + 
-> >   scale_color_manual(name = "Line Type", values = road_colors,
-> >      guide = guide_legend(override.aes = list(linetype = "solid", shape = NA))) + 
-> >   scale_fill_manual(name = "Soil Type", values = blue_green,
-> >      guide = guide_legend(override.aes = list(linetype = "blank", shape = 21, colour = NA))) + 
-> >   ggtitle("NEON Harvard Forest Field Site") + 
-> >   coord_sf()
-> > ```
-> >
-> > If we want each soil to be shown with a different symbol, we can
-> > give multiple values to the `scale_shape_manual()` argument.
-> >
-> > ```{r harv-plot-locations-pch}
-> > ggplot() + 
-> >   geom_sf(data = lines_HARV, aes(color = TYPE), show.legend = "line", size = 1) + 
-> >   geom_sf(data = plot_locations, aes(fill = soilTypeOr, shape = soilTypeOr),
-> >           show.legend = 'point', colour = NA, size = 3) + 
-> >   scale_shape_manual(name = "Soil Type", values = c(21, 22)) +
-> >   scale_color_manual(name = "Line Type", values = road_colors,
-> >      guide = guide_legend(override.aes = list(linetype = "solid", shape = NA))) + 
-> >   scale_fill_manual(name = "Soil Type", values = blue_green,
-> >      guide = guide_legend(override.aes = list(linetype = "blank", shape = c(21, 22),
-> >      color = blue_green))) + 
-> >   ggtitle("NEON Harvard Forest Field Site") + 
-> >   coord_sf()
-> > ```
-> {: .solution}
-{: .challenge}
 
-> ## Challenge: Plot Raster & Vector Data Together
->
-> You can plot vector data layered on top of raster data using the 
-> `+` to add a layer in `ggplot`. Create a plot that uses the NEON AOI
-> Canopy Height Model `NEON_RemoteSensing/HARV/CHM/HARV_chmCrop.tif`
-> as a base layer. On top of the
-> CHM, please add:
->
-> * The study site AOI.
-> * Roads.
-> * The tower location.
->
-> Be sure to give your plot a meaningful title.
->
-> > ## Answers
-> >
-> > ```{r challenge-vector-raster-overlay, echo=TRUE}
-> > ggplot() +
-> >   geom_raster(data = CHM_HARV_df, aes(x = x, y = y, fill = HARV_chmCrop)) +
-> >   geom_sf(data = lines_HARV, color = "black") +
-> >   geom_sf(data = aoi_boundary_HARV, color = "grey20", size = 1) +
-> >   geom_sf(data = point_HARV, pch = 8) +
-> >   ggtitle("NEON Harvard Forest Field Site w/ Canopy Height Model") + 
-> >   coord_sf()
-> > ```
-> {: .solution}
-{: .challenge}
+## Answers
 
-{% include links.md %}
+First we need to read in the data and see how many
+unique soils are represented in the `soilTypeOr` attribute.
+
+```{r}
+plot_locations <- st_read("data/NEON-DS-Site-Layout-Files/HARV/PlotLocations_HARV.shp")
+
+levels(plot_locations$soilTypeOr)
+```
+
+
+Next we can create a new color palette with one color for
+each soil type.
+
+```{r}
+blue_green <- c("blue", "darkgreen")
+```
+
+Finally, we will create our plot.
+
+```{r harv-plot-locations-bg}
+ggplot() + 
+   geom_sf(data = lines_HARV, aes(color = TYPE), show.legend = "line") + 
+   geom_sf(data = plot_locations, aes(fill = soilTypeOr), 
+           shape = 21, color = NA, show.legend = 'point') + 
+   scale_color_manual(name = "Line Type", values = road_colors,
+     guide = guide_legend(override.aes = list(linetype = "solid", shape = NA))) + 
+  scale_fill_manual(name = "Soil Type", values = blue_green,
+      guide = guide_legend(override.aes = list(linetype = "blank", shape = 21, colour = NA))) + ggtitle("NEON Harvard Forest Field Site") + coord_sf()
+```
+
+If we want each soil to be shown with a different symbol, we can
+give multiple values to the `scale_shape_manual()` argument.
+
+```{r harv-plot-locations-pch}
+ggplot() + 
+   geom_sf(data = lines_HARV, aes(color = TYPE), show.legend = "line", size = 1) + 
+  geom_sf(data = plot_locations, aes(fill = soilTypeOr, shape = soilTypeOr),
+           show.legend = 'point', colour = NA, size = 3) + 
+   scale_shape_manual(name = "Soil Type", values = c(21, 22)) +
+   scale_color_manual(name = "Line Type", values = road_colors,
+      guide = guide_legend(override.aes = list(linetype = "solid", shape = NA))) + 
+   scale_fill_manual(name = "Soil Type", values = blue_green,
+      guide = guide_legend(override.aes = list(linetype = "blank", shape = c(21, 22),
+      color = blue_green))) + 
+   ggtitle("NEON Harvard Forest Field Site") + 
+   coord_sf()
+```
+
+
+## Challenge: Plot Raster & Vector Data Together
+
+You can plot vector data layered on top of raster data using the 
+`+` to add a layer in `ggplot`. Create a plot that uses the NEON AOI
+Canopy Height Model `NEON_RemoteSensing/HARV/CHM/HARV_chmCrop.tif`
+as a base layer. On top of the CHM, please add:
+
+* The study site AOI.
+* Roads.
+* The tower location.
+
+Be sure to give your plot a meaningful title.
+
+## Answers
+
+```{r challenge-vector-raster-overlay, echo=TRUE}
+ggplot() +
+   geom_raster(data = CHM_HARV_df, aes(x = x, y = y, fill = HARV_chmCrop)) +
+   geom_sf(data = lines_HARV, color = "black") +
+   geom_sf(data = aoi_boundary_HARV, color = "grey20", size = 1) +
+   geom_sf(data = point_HARV, pch = 8) +
+   ggtitle("NEON Harvard Forest Field Site w/ Canopy Height Model") + 
+   coord_sf()
+```
+

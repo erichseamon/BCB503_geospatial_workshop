@@ -68,6 +68,7 @@ ggplot() +
 
 If we want to know the cutoff values for the groups, we can ask for the unique values 
 of `fct_elevation`:
+
 ```{r unique-breaks}
 unique(DSM_HARV_df$fct_elevation)
 ```
@@ -84,6 +85,7 @@ DSM_HARV_df %>%
 We might prefer to customize the cutoff values for these groups.
 Lets round the cutoff values so that we have groups for the ranges of 
 301–350 m, 351–400 m, and 401–450 m.
+
 To implement this we will give `mutate()` a numeric vector of break points instead 
 of the number of breaks we want.
 
@@ -97,6 +99,7 @@ unique(DSM_HARV_df$fct_elevation_2)
 ```
 
 ## Data Tips
+
 Note that when we assign break values a set of 4 values will result in 3 bins of data.
 The bin intervals are shown using `(` to mean exclusive and `]` to mean inclusive. For example: `(305, 342]` means "from 306 through 342".
 
@@ -127,6 +130,7 @@ The plot above uses the default colors inside `ggplot` for raster objects.
 We can specify our own colors to make the plot look a little nicer.
 R has a built in set of colors for plotting terrain, which are built in
 to the `terrain.colors()` function.
+
 Since we have three bins, we want to create a 3-color palette:
 
 ```{r terrain-colors}
@@ -190,6 +194,7 @@ Create a plot of the Harvard Forest Digital Surface Model (DSM) that has:
 3. A plot title.
 
 ## Answers
+
 ``` {r challenge-code-plotting}
  
  DSM_HARV_df <- DSM_HARV_df  %>%
@@ -213,8 +218,7 @@ Create a plot of the Harvard Forest Digital Surface Model (DSM) that has:
 We can layer a raster on top of a hillshade raster for the same area, and use a
 transparency factor to create a 3-dimensional shaded effect. A
 hillshade is a raster that maps the shadows and texture that you would see from
-above when viewing terrain.
-We will add a custom color, making the plot grey. 
+above when viewing terrain.We will add a custom color, making the plot grey. 
 
 First we need to read in our DSM hillshade data and view the structure:
 
@@ -244,6 +248,7 @@ ggplot() +
 ```
 
 ## Data Tips
+
 Turn off, or hide, the legend on a plot by adding `guide = "none"` 
 to a `scale_something()` function or by setting `theme(legend.position = "none")`.
  

@@ -32,30 +32,30 @@ library(dplyr)
 ```{r load-data, echo = FALSE, results='hide'}
 # Learners will have this data loaded from earlier episodes
 # shapefiles
-point_HARV <- st_read("data/NEON-DS-Site-Layout-Files/HARV/HARVtower_UTM18N.shp")
-lines_HARV <- st_read("data/NEON-DS-Site-Layout-Files/HARV/HARV_roads.shp")
-aoi_boundary_HARV <- st_read("data/NEON-DS-Site-Layout-Files/HARV/HarClip_UTMZ18.shp")
+point_HARV <- st_read("../data/NEON-DS-Site-Layout-Files/HARV/HARVtower_UTM18N.shp")
+lines_HARV <- st_read("../data/NEON-DS-Site-Layout-Files/HARV/HARV_roads.shp")
+aoi_boundary_HARV <- st_read("../data/NEON-DS-Site-Layout-Files/HARV/HarClip_UTMZ18.shp")
 
 # CHM
 CHM_HARV <-
-  raster("data/NEON-DS-Airborne-Remote-Sensing/HARV/CHM/HARV_chmCrop.tif")
+  raster("../data/NEON-DS-Airborne-Remote-Sensing/HARV/CHM/HARV_chmCrop.tif")
 
 CHM_HARV_df <- as.data.frame(CHM_HARV, xy = TRUE)
 
 # plot locations
 plot_locations_HARV <-
-  read.csv("data/NEON-DS-Site-Layout-Files/HARV/HARV_PlotLocations.csv")
+  read.csv("../data/NEON-DS-Site-Layout-Files/HARV/HARV_PlotLocations.csv")
 utm18nCRS <- st_crs(point_HARV)
 plot_locations_sp_HARV <- st_as_sf(plot_locations_HARV, 
                                    coords = c("easting", "northing"), 
                                    crs = utm18nCRS)
 ```
 
-> ## Things You’ll Need To Complete This Episode
->
-> See the [lesson homepage]({{ site.baseurl }}) for detailed information about the software,
-> data, and other prerequisites you will need to work through the examples in this episode.
-{: .prereq}
+## Things You’ll Need To Complete This Episode
+
+See the [lesson homepage]({{ site.baseurl }}) for detailed information about the software,
+data, and other prerequisites you will need to work through the examples in this episode.
+
 
 This episode explains how to crop a raster using the extent of a vector
 shapefile. We will also cover how to extract values from a raster that occur
@@ -86,8 +86,8 @@ we have worked with in this workshop:
 CHM_HARV_sp <- st_as_sf(CHM_HARV_df, coords = c("x", "y"), crs = utm18nCRS)
 # approximate the boundary box with a random sample of raster points
 CHM_rand_sample <- sample_n(CHM_HARV_sp, 10000)
-lines_HARV <- st_read("data/NEON-DS-Site-Layout-Files/HARV/HARV_roads.shp")
-plots_HARV <- st_read("data/NEON-DS-Site-Layout-Files/HARV/PlotLocations_HARV.shp")
+lines_HARV <- st_read("../data/NEON-DS-Site-Layout-Files/HARV/HARV_roads.shp")
+plots_HARV <- st_read("../data/NEON-DS-Site-Layout-Files/HARV/PlotLocations_HARV.shp")
 ```
 
 ```{r compare-data-extents, echo = FALSE}
@@ -184,27 +184,26 @@ Our plot location extent is not the largest but is larger than the AOI Boundary.
 It would be nice to see our vegetation plot locations plotted on top of the
 Canopy Height Model information.
 
-> ## Challenge: Crop to Vector Points Extent
-> 
-> 1. Crop the Canopy Height Model to the extent of the study plot locations.
-> 2. Plot the vegetation plot location points on top of the Canopy Height Model.
-> 
-> > ## Answers
-> > 
-> > ```{r challenge-code-crop-raster-points}
-> > 
-> > CHM_plots_HARVcrop <- crop(x = CHM_HARV, y = as(plot_locations_sp_HARV, "Spatial"))
-> > 
-> > CHM_plots_HARVcrop_df <- as.data.frame(CHM_plots_HARVcrop, xy = TRUE)
-> > 
-> > ggplot() + 
-> >   geom_raster(data = CHM_plots_HARVcrop_df, aes(x = x, y = y, fill = HARV_chmCrop)) + 
-> >   scale_fill_gradientn(name = "Canopy Height", colors = terrain.colors(10)) + 
-> >   geom_sf(data = plot_locations_sp_HARV) + 
-> >   coord_sf()
-> > ```
-> {: .solution}
-{: .challenge}
+## Challenge: Crop to Vector Points Extent
+ 
+1. Crop the Canopy Height Model to the extent of the study plot locations.
+2. Plot the vegetation plot location points on top of the Canopy Height Model.
+ 
+## Answers
+ 
+```{r challenge-code-crop-raster-points}
+ 
+CHM_plots_HARVcrop <- crop(x = CHM_HARV, y = as(plot_locations_sp_HARV, "Spatial"))
+
+CHM_plots_HARVcrop_df <- as.data.frame(CHM_plots_HARVcrop, xy = TRUE)
+
+ggplot() + 
+   geom_raster(data = CHM_plots_HARVcrop_df, aes(x = x, y = y, fill = HARV_chmCrop)) + 
+   scale_fill_gradientn(name = "Canopy Height", colors = terrain.colors(10)) + 
+   geom_sf(data = plot_locations_sp_HARV) + 
+   coord_sf()
+```
+
 
 In the plot above, created in the challenge, all the vegetation plot locations
 (black dots) appear on the Canopy Height Model raster layer except for one. One is
@@ -242,12 +241,12 @@ new_extent <- extent(732161.2, 732238.7, 4713249, 4713333)
 class(new_extent)
 ```
 
-> ## Data Tip
->
-> The extent can be created from a numeric vector (as shown above), a matrix, or
+## Data Tip
+
+ The extent can be created from a numeric vector (as shown above), a matrix, or
 > a list. For more details see the `extent()` function help file
-> (`?raster::extent`).
-{: .callout}
+ (`?raster::extent`).
+
 
 Once we have defined our new extent, we can use the `crop()` function to crop
 our raster to this extent object.
@@ -371,37 +370,33 @@ mean_tree_height_tower <- extract(x = CHM_HARV,
 mean_tree_height_tower
 ```
 
-> ## Challenge: Extract Raster Height Values For Plot Locations
-> 
-> 1) Use the plot locations object (`plot_locations_sp_HARV`)
-> to extract an average tree height for the
-> area within 20m of each vegetation plot location in the study area. Because there are 
-> multiple plot locations, there will be multiple averages returned, so the `df = TRUE` 
-> argument should be used.
-> 
-> 2) Create a plot showing the mean tree height of each area. 
-> 
-> > ## Answers
-> > 
-> > ```{r hist-tree-height-veg-plot}
-> > # extract data at each plot location
-> > mean_tree_height_plots_HARV <- extract(x = CHM_HARV,
-> >                                 y = as(plot_locations_sp_HARV, "Spatial"),
-> >                                buffer=20,
-> >                                fun = mean,
-> >                                df = TRUE)
-> > 
-> > # view data
-> > mean_tree_height_plots_HARV
-> > 
-> > # plot data
-> > ggplot(data = mean_tree_height_plots_HARV, aes(ID, HARV_chmCrop)) + 
-> >   geom_col() + 
-> >   ggtitle("Mean Tree Height at each Plot") + 
-> >   xlab("Plot ID") + 
-> >   ylab("Tree Height (m)")
-> > ```
-> {: .solution}
-{: .challenge}
-
-{% include links.md %}
+## Challenge: Extract Raster Height Values For Plot Locations
+ 
+ 1) Use the plot locations object (`plot_locations_sp_HARV`)
+ to extract an average tree height for the
+ area within 20m of each vegetation plot location in the study area. Because there are 
+ multiple plot locations, there will be multiple averages returned, so the `df = TRUE` 
+ argument should be used.
+ 
+ 2) Create a plot showing the mean tree height of each area. 
+ 
+ ## Answers
+ 
+```{r hist-tree-height-veg-plot}
+# extract data at each plot location
+mean_tree_height_plots_HARV <- extract(x = CHM_HARV,
+                                 y = as(plot_locations_sp_HARV, "Spatial"),
+                                buffer=20,
+                               fun = mean,
+                                df = TRUE)
+ 
+ # view data
+ mean_tree_height_plots_HARV
+ 
+ # plot data
+ ggplot(data = mean_tree_height_plots_HARV, aes(ID, HARV_chmCrop)) + 
+   geom_col() + 
+   ggtitle("Mean Tree Height at each Plot") + 
+   xlab("Plot ID") + 
+   ylab("Tree Height (m)")
+```

@@ -56,28 +56,27 @@ dev.off()
 
 Open up this document and have a look.
 
-> ## Challenge 1
->
-> Rewrite your 'pdf' command to print a second
-> page in the pdf, showing the side-by-side bar
-> plot of gdp per capita in countries in the Americas
-> in the years 1952 and 2007 that you created in the 
-> previous episode. 
-> 
-> > ## Solution to challenge 1
-> >
-> > ```{r, eval = FALSE}
-> > pdf("Distribution-of-gdpPercap.pdf", width = 12, height = 4)
-> > ggplot(data = gapminder, aes(x = gdpPercap)) + 
-> > geom_histogram()
-> > 
-> > ggplot(data = gapminder_small_2, aes(x = country, y = gdpPercap, fill = as.factor(year))) +
-> > geom_col(position = "dodge") + coord_flip()
-> > 
-> > dev.off()
-> > ```
-> {: .solution}
-{: .challenge}
+## Challenge 1
+
+Rewrite your 'pdf' command to print a second
+page in the pdf, showing the side-by-side bar
+plot of gdp per capita in countries in the Americas
+in the years 1952 and 2007 that you created in the 
+previous episode. 
+
+## Solution to challenge 1
+
+```{r, eval = FALSE}
+pdf("Distribution-of-gdpPercap.pdf", width = 12, height = 4)
+ggplot(data = gapminder, aes(x = gdpPercap)) + 
+geom_histogram()
+ 
+ggplot(data = gapminder_small_2, aes(x = country, y = gdpPercap, fill = as.factor(year))) +
+geom_col(position = "dodge") + coord_flip()
+ 
+dev.off()
+```
+
 
 
 The commands `jpeg`, `png` etc. are used similarly to produce
@@ -129,24 +128,23 @@ write.csv(
 )
 ```
 
-> ## Challenge 2
->
-> Subset the gapminder
-> data to include only data points collected since 1990. Write out the new subset to a file
-> in the `cleaned-data/` directory.
-> 
-> > ## Solution to challenge 2
-> >
-> > ```{r, eval = FALSE}
-> > 
-> > gapminder_after_1990 <- filter(gapminder, year > 1990)
-> > 
-> > write.csv(gapminder_after_1990,
-> >   file = "cleaned-data/gapminder-after-1990.csv",
-> >   row.names = FALSE)
-> > ```
-> {: .solution}
-{: .challenge}
+## Challenge 2
+
+Subset the gapminder
+data to include only data points collected since 1990. Write out the new subset to a file
+in the `cleaned-data/` directory.
+
+## Solution to challenge 2
+
+```{r, eval = FALSE}
+
+gapminder_after_1990 <- filter(gapminder, year > 1990)
+ 
+write.csv(gapminder_after_1990,
+ file = "cleaned-data/gapminder-after-1990.csv",
+   row.names = FALSE)
+```
+
 
 ```{r, echo=FALSE}
 # We remove after rendering the lesson, because we don't want this in the lesson

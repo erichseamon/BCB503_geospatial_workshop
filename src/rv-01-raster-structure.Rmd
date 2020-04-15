@@ -98,9 +98,8 @@ raster dataset into R and explore its metadata more closely. We can use the `ras
 function to open a raster in R.
 
 ## Data Tip - Object names
-To improve code
-readability, file and object names should be used that make it clear what is in
-the file. The data for this episode were collected from Harvard Forest so
+
+To improve code readability, file and object names should be used that make it clear what is in the file. The data for this episode were collected from Harvard Forest so
 we'll use a naming convention of `datatype_HARV`.
 
 First we will load our raster file into R and view the data structure.
@@ -157,6 +156,7 @@ ggplot() +
     scale_fill_viridis_c() +
     coord_quickmap()
 ```
+
 ## Plotting Tip
 
 More information about the Viridis palette used above at
@@ -165,8 +165,10 @@ More information about the Viridis palette used above at
 
 ## Plotting Tip
 For faster, simpler plots, you can use the `plot` function from the `raster` package.
+
 ## Show plot
 See `?plot` for more arguments to customize the plot
+
 ```{r, eval = TRUE}
 plot(DSM_HARV)
 ```
@@ -197,6 +199,7 @@ What units are our data in?
 `+units=m` tells us that our data is in meters.
 
 ## Understanding CRS in Proj4 Format
+
 The CRS for our data is given to us by R in `proj4` format. Let's break down
 the pieces of `proj4` string. The string contains all of the individual CRS
 elements that R or another GIS might need. Each element is specified with a
@@ -205,6 +208,7 @@ each `+` we see the CRS element being defined. For example projection (`proj=`)
 and datum (`datum=`).
 
 ### UTM Proj4 String
+
 Our projection string for `DSM_HARV` specifies the UTM projection as follows:
 
 `+proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0`
@@ -269,6 +273,7 @@ contains data for more than one variable or time period for each cell. By
 default the `raster()` function only imports the first band in a raster
 regardless of whether it has one or more bands. Jump to a later episode in
 this series for information on working with multi-band rasters:
+
 [Work with Multi-band Rasters in R]({{ site.baseurl }}/05-raster-multi-band-in-r/).
 
 ## Dealing with Missing Data
@@ -378,6 +383,7 @@ opens up the raster, it will assign each instance of the value to `NA`. Values
 of `NA` will be ignored by R as demonstrated above.
 
 ## Challenge
+
 Use the output from the `GDALinfo()` function to find out what `NoDataValue` is used for our `DSM_HARV` dataset.
 
 ## Answers
@@ -403,6 +409,7 @@ upon how the data are scaled. Thus a value greater than 1 or greater than 10,000
 is likely caused by an error in either data collection or processing.
 
 ### Find Bad Data Values
+
 Sometimes a raster's metadata will tell us the range of expected values for a
 raster. Values outside of this range are suspect and we need to consider that
 when we analyze the data. Sometimes, we need to use some common sense and
@@ -490,5 +497,6 @@ GDALinfo("../data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_DSMhill.tif")
 5. Is the file a multi- or single-band raster?  Single.
 
 ## More Resources
+
 Read more about the `raster` package in R.](http://cran.r-project.org/package=raster)
 

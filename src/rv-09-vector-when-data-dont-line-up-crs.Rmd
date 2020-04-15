@@ -14,7 +14,7 @@ source: Rmd
 
 ```{r setup, echo=FALSE}
 source("../bin/chunk-options.R")
-source("../setup.R")
+#source("../setup.R")
 knitr_fig_path("09-")
 ```
 
@@ -26,10 +26,9 @@ library(ggplot2)
 library(dplyr)
 ```
 
-> ## Things You’ll Need To Complete This Episode
-> See the [lesson homepage]({{ site.baseurl }}) for detailed information about the software,
-> data, and other prerequisites you will need to work through the examples in this episode.
-{: .prereq}
+## Things You’ll Need To Complete This Episode
+See the [lesson homepage]({{ site.baseurl }}) for detailed information about the software,
+data, and other prerequisites you will need to work through the examples in this episode.
 
 In [an earlier episode]({{ site.baseurl }}/03-raster-reproject-in-r/)
 we learned how to handle a situation where you have two different
@@ -46,10 +45,10 @@ We will continue to work with the three shapefiles that we loaded in the
 
 ```{r load-data, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE}
 # learners will have this data loaded from previous episodes
-aoi_boundary_HARV <- st_read("data/NEON-DS-Site-Layout-Files/HARV/HarClip_UTMZ18.shp")
-lines_HARV <- st_read("data/NEON-DS-Site-Layout-Files/HARV/HARV_roads.shp")
-point_HARV <- st_read("data/NEON-DS-Site-Layout-Files/HARV/HARVtower_UTM18N.shp")
-CHM_HARV <- raster("data/NEON-DS-Airborne-Remote-Sensing/HARV/CHM/HARV_chmCrop.tif")
+aoi_boundary_HARV <- st_read("../data/NEON-DS-Site-Layout-Files/HARV/HarClip_UTMZ18.shp")
+lines_HARV <- st_read("../data/NEON-DS-Site-Layout-Files/HARV/HARV_roads.shp")
+point_HARV <- st_read("../data/NEON-DS-Site-Layout-Files/HARV/HARVtower_UTM18N.shp")
+CHM_HARV <- raster("../data/NEON-DS-Airborne-Remote-Sensing/HARV/CHM/HARV_chmCrop.tif")
 CHM_HARV_df <- as.data.frame(CHM_HARV, xy = TRUE)
 roadColors <- c("blue", "green", "grey", "purple")[lines_HARV$TYPE]
 ```
@@ -80,12 +79,9 @@ counties, countries, etc).
 
 In this episode we will learn how to identify and manage spatial data
 in different projections. We will learn how to reproject the data so
-that they
-are in the same projection to support plotting / mapping. Note that
-these skills
-are also required for any geoprocessing / spatial analysis. Data need
-to be in
-the same CRS to ensure accurate results.
+that they are in the same projection to support plotting / mapping. Note that
+these skills are also required for any geoprocessing / spatial analysis. Data need
+to be in the same CRS to ensure accurate results.
 
 We will continue to use the `sf` and `raster` packages in this episode.
 
@@ -108,7 +104,7 @@ these data have been modified and reprojected from the original data downloaded
 from the Census website to support the learning goals of this episode.
 
 ```{r read-shp }
-state_boundary_US <- st_read("data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-State-Boundaries-Census-2014.shp")
+state_boundary_US <- st_read("../data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-State-Boundaries-Census-2014.shp")
 ```
 
 Next, let's plot the U.S. states data:
@@ -127,7 +123,7 @@ nicer. We will import
 `NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-Boundary-Dissolved-States`.
 
 ```{r}
-country_boundary_US <- st_read("data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-Boundary-Dissolved-States.shp")
+country_boundary_US <- st_read("../data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/US-Boundary-Dissolved-States.shp")
 ```
 
 If we specify a thicker line width using `size = 2` for the border layer, it will
@@ -189,11 +185,11 @@ Note that there are no specified units above. This is because this geographic
 coordinate reference system is in latitude and longitude which is most
 often recorded in decimal degrees.
 
-> ## Data Tip
-> the last portion of each `proj4` string
-> is `+towgs84=0,0,0 `. This is a conversion factor that is used if a datum
-> conversion is required. We will not deal with datums in this episode series.
-{: .callout}
+## Data Tip
+the last portion of each `proj4` string
+is `+towgs84=0,0,0 `. This is a conversion factor that is used if a datum
+conversion is required. We will not deal with datums in this episode series.
+
 
 ## CRS Units - View Object Extent
 
@@ -217,18 +213,17 @@ Note the difference in the units for each object. The extent for
 representing decimal degree units. Our tower location point is in UTM, is
 represented in meters.
 
-> ## Proj4 & CRS Resources
-> * [Official PROJ library documentation](https://proj4.org/)
-> * [More information on the proj4 format.](http://proj.maptools.org/faq.html)
-> * [A fairly comprehensive list of CRSs by format.](http://spatialreference.org)
-> * To view a list of datum conversion factors type: `projInfo(type = "datum")`
+## Proj4 & CRS Resources
+* [Official PROJ library documentation](https://proj4.org/)
+* [More information on the proj4 format.](http://proj.maptools.org/faq.html)
+* [A fairly comprehensive list of CRSs by format.](http://spatialreference.org)
+* To view a list of datum conversion factors type: `projInfo(type = "datum")`
 into the R console.
-{: .callout}
+
 
 ## Reproject Vector Data or No?
 
-We saw in [an earlier episode]({{ site.baseurl }}/03-raster-reproject-in-r/) that when working with raster
-data in different CRSs, we needed to convert all objects to the same
+We saw in [an earlier episode]({{ site.baseurl }}/03-raster-reproject-in-r/) that when working with raster data in different CRSs, we needed to convert all objects to the same
 CRS. We can do the same thing with our vector data - however, we
 don't need to! When using the `ggplot2` package, `ggplot`
 automatically converts all objects to the same CRS before plotting.
@@ -244,31 +239,31 @@ ggplot() +
   coord_sf()
 ```
 
-> ## Challenge - Plot Multiple Layers of Spatial Data
->
-> Create a map of the North Eastern United States as follows:
->
-> 1. Import and plot `Boundary-US-State-NEast.shp`. Adjust line width as necessary.
-> 2. Layer the Fisher Tower (in the NEON Harvard Forest site) point location `point_HARV` onto the plot.
-> 3. Add a title.
-> 4. Add a legend that shows both the state boundary (as a line) and
-> the Tower location point.
->
-> > ## Answers
-> >
-> > ```{r ne-states-harv}
-> > NE.States.Boundary.US <- st_read("data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/Boundary-US-State-NEast.shp")
-> >
-> > ggplot() +
-> >     geom_sf(data = NE.States.Boundary.US, aes(color ="color"), show.legend = "line") +
-> >     scale_color_manual(name = "", labels = "State Boundary", values = c("color" = "gray18")) +
-> >     geom_sf(data = point_HARV, aes(shape = "shape"), color = "purple") +
-> >     scale_shape_manual(name = "", labels = "Fisher Tower", values = c("shape" = 19)) +
-> >     ggtitle("Fisher Tower location") +
-> >     theme(legend.background = element_rect(color = NA)) +
-> >     coord_sf()
-> > ```
-> {: .solution}
-{: .challenge}
+## Challenge - Plot Multiple Layers of Spatial Data
 
-{% include links.md %}
+Create a map of the North Eastern United States as follows:
+
+1. Import and plot `Boundary-US-State-NEast.shp`. Adjust line width as necessary.
+
+2. Layer the Fisher Tower (in the NEON Harvard Forest site) point location `point_HARV` onto the plot.
+
+3. Add a title.
+
+4. Add a legend that shows both the state boundary (as a line) and
+the Tower location point.
+
+
+## Answers
+
+```{r ne-states-harv}
+NE.States.Boundary.US <- st_read("data/NEON-DS-Site-Layout-Files/US-Boundary-Layers/Boundary-US-State-NEast.shp")
+
+ggplot() +
+    geom_sf(data = NE.States.Boundary.US, aes(color ="color"), show.legend = "line") +
+    scale_color_manual(name = "", labels = "State Boundary", values = c("color" = "gray18")) +
+geom_sf(data = point_HARV, aes(shape = "shape"), color = "purple") +
+scale_shape_manual(name = "", labels = "Fisher Tower", values = c("shape" = 19)) +
+ggtitle("Fisher Tower location") +
+theme(legend.background = element_rect(color = NA)) +
+coord_sf()
+```
