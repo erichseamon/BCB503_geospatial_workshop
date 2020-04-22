@@ -35,6 +35,7 @@ library(rgdal)
 #information about our raster data before we read that data into R. 
 #It is ideal to do this before importing your data.
 
+#GDal = Geospatial data extraction library
 
 GDALinfo("../data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif")
 
@@ -226,6 +227,9 @@ nlayers(DSM_HARV)
 #The camera did not collect data in these areas.
 
 
+
+##-EXTRA CODE MATERIAL--NOT INCLUDED IN LESSON NARRATIVE
+
 # Use stack function to read in all bands
 
 RGB_stack <-
@@ -255,7 +259,6 @@ ggplot() +
   ggtitle("Orthographic Imagery", subtitle = 'Red Band') +
   coord_quickmap()
 
-
 # demonstration code - not being taught
 
 RGB_2m_df_nd <- RGB_2m_df
@@ -276,6 +279,10 @@ ggplot() +
   ggtitle("Orthographic Imagery", subtitle = "All bands") +
   coord_quickmap()
 
+##-END OF EXTRA CODE MATERIAL--NOT INCLUDED IN LESSON NARRATIVE
+
+
+
 
 
 #If your raster already has `NA` values set correctly but you aren't 
@@ -287,6 +294,11 @@ ggplot() +
 #To highlight `NA` values in ggplot, alter the `scale_fill_*()` 
 #layer to contain a colour instruction for `NA` values, like 
 #`scale_fill_viridis_c(na.value = 'deeppink')`
+
+
+
+
+##-EXTRA CODE MATERIAL--NOT INCLUDED IN LESSON NARRATIVE
 
 # demonstration code
 # function to replace 0 with NA where all three values are 0 only
@@ -306,6 +318,10 @@ ggplot() +
 
 # memory saving
 rm(RGB_2m, RGB_stack, RGB_2m_df_nd, RGB_2m_df, RGB_2m_nas)
+
+##-END OF EXTRA CODE MATERIAL--NOT INCLUDED IN LESSON NARRATIVE
+
+
 
 
 #The value that is conventionally used to take note of missing data 
@@ -365,6 +381,10 @@ GDALinfo("../data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif")
 #values and may suggest a solution. Below, reclassification is used to highlight
 #elevation values over 400m with a contrasting colour.
 
+
+
+##-EXTRA CODE MATERIAL--NOT INCLUDED IN LESSON NARRATIVE
+
 # reclassify raster to ok/not ok
 DSM_highvals <- reclassify(DSM_HARV, rcl = c(0, 400, NA_integer_, 400, 420, 1L), include.lowest = TRUE)
 DSM_highvals <- as.data.frame(DSM_highvals, xy = TRUE)
@@ -380,6 +400,10 @@ ggplot() +
 
 # memory saving
 rm(DSM_highvals)
+
+##-END OF EXTRA CODE MATERIAL--NOT INCLUDED IN LESSON NARRATIVE
+
+
 
 
 ## Create A Histogram of Raster Values

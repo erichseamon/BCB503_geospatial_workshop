@@ -30,7 +30,7 @@ RGB_band1_HARV <- raster("../data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Image
 
 RGB_band1_HARV_df  <- as.data.frame(RGB_band1_HARV, xy = TRUE)
 
-
+#takes a bit to plot
 ggplot() +
   geom_raster(data = RGB_band1_HARV_df,
               aes(x = x, y = y, alpha = HARV_RGB_Ortho)) + 
@@ -112,7 +112,7 @@ ggplot() +
 
 #To bring in all bands of a multi-band raster, we use the`stack()` function.
 
-RGB_stack_HARV <- stack("data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_RGB_Ortho.tif")
+RGB_stack_HARV <- stack("../data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_RGB_Ortho.tif")
 
 #Let's preview the attributes of our stack object: 
 
@@ -144,9 +144,28 @@ str(RGB_stack_HARV_df)
 
 #Let's create a histogram of the first band: 
 
+par(mfrow=c(2,1))
+#layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE))
+
+plot(RGB_stack_HARV[[2]])
+
+plot(RGB_stack_HARV[[3]])
+
+
+
 ggplot() +
   geom_histogram(data = RGB_stack_HARV_df, aes(HARV_RGB_Ortho.1))
 
+ggplot() +
+  geom_histogram(data = RGB_stack_HARV_df, aes(HARV_RGB_Ortho.2))
+
+#ERICH ADDED: what would it look like if i plotted all three bands in one histogram plot?  What does this say about
+#the three bands?  
+
+ggplot() +
+  geom_histogram(data = RGB_stack_HARV_df, aes(HARV_RGB_Ortho.1), fill = "red", alpha = .2) +
+  geom_histogram(data = RGB_stack_HARV_df, aes(HARV_RGB_Ortho.2), fill = "blue", alpha = .2) + 
+  geom_histogram(data = RGB_stack_HARV_df, aes(HARV_RGB_Ortho.3), fill = "green", alpha = .2)
 
 #And a raster plot of the second band: 
 

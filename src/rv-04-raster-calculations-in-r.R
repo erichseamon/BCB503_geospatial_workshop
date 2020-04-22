@@ -107,6 +107,9 @@ GDALinfo("../data/NEON-DS-Airborne-Remote-Sensing/HARV/DSM/HARV_dsmCrop.tif")
 
 CHM_HARV <- DSM_HARV - DTM_HARV
 
+#addition: what if i removed values that are zero?
+#values(CHM_HARV)[values(CHM_HARV) == 0] <- NA 
+
 CHM_HARV_df <- as.data.frame(CHM_HARV, xy = TRUE)
 
 
@@ -236,10 +239,7 @@ CHM_ov_HARV_df <- as.data.frame(CHM_ov_HARV, xy = TRUE)
    coord_quickmap()
 
 #How do the plots of the CHM created with manual raster math 
-#and the `overlay()`
- 
- 
-#function compare?
+#and the `overlay()` function compare?
 
 ## Export a GeoTIFF
 
