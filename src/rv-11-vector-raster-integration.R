@@ -96,7 +96,10 @@ ggplot() +
 #spatial object that will be used to crop the raster. R will use the `extent` of
 #the spatial object as the cropping boundary.
 
-#To illustrate this, we will crop the Canopy Height Model (CHM) to only include the area of interest (AOI). Let's start by plotting the full extent of the CHM data and overlay where the AOI falls within it. The boundaries of the AOI will be colored blue, and we use `fill = NA` to make the area transparent.
+#To illustrate this, we will crop the Canopy Height Model (CHM) to only include the area
+#of interest (AOI). Let's start by plotting the full extent of the CHM data and overlay
+#where the AOI falls within it. The boundaries of the AOI will be colored blue, and we 
+#use `fill = NA` to make the area transparent.
 
 ggplot() +
   geom_raster(data = CHM_HARV_df, aes(x = x, y = y, fill = HARV_chmCrop)) + 
@@ -107,7 +110,10 @@ ggplot() +
 
 #Now that we have visualized the area of the CHM we want to subset, we can
 #perform the cropping operation. We are going to create a new object with only
-#the portion of the CHM data that falls within the boundaries of the AOI. The function `crop()` is from the raster package and doesn't know how to deal with `sf` objects. Therefore, we first need to convert `aoi_boundary_HARV` from a `sf` object to "Spatial" object.
+#the portion of the CHM data that falls within the boundaries of the AOI. 
+#The function `crop()` is from the raster package and doesn't know how to deal 
+#with `sf` objects. Therefore, we first need to convert `aoi_boundary_HARV` 
+#from a `sf` object to "Spatial" object.
 
 CHM_HARV_Cropped <- crop(x = CHM_HARV, y = as(aoi_boundary_HARV, "Spatial"))
 
@@ -336,6 +342,9 @@ mean_tree_height_tower
 # 2) Create a plot showing the mean tree height of each area. 
  
  ## Answers
+
+#ERICH ADDED ID column 
+plot_locations_sp_HARV$ID <- row.names(plot_locations_sp_HARV)
  
 # extract data at each plot location
 mean_tree_height_plots_HARV <- extract(x = CHM_HARV,
@@ -354,3 +363,17 @@ mean_tree_height_plots_HARV <- extract(x = CHM_HARV,
    ggtitle("Mean Tree Height at each Plot") + 
    xlab("Plot ID") + 
    ylab("Tree Height (m)")
+ 
+ #ERICH ADDED lets merge heights to locations
+ merged_treeheights <- merge(plot_locations_sp_HARV, mean_tree_height_plots_HARV, by="ID")
+ 
+ #ERICH ADDED now lets plot locations
+ 
+treeheights_coords <- do.call(rbind, st_geometry(merged_treeheights)) %>% 
+   as_tibble() %>% setNames(c("lon","lat"))
+ 
+ ggplot() + 
+   geom_raster(data = CHM_plots_HARVcrop_df, aes(x = x, y = y, fill = HARV_chmCrop)) + 
+   scale_fill_gradientn(name = "Canopy Height", colors = terrain.colors(10)) + 
+   geom_point(data = merged_treeheights, aes(x = treeheights_coords$lon, y = treeheights_coords$lat, colour = HARV_chmCrop)) + scale_colour_gradient(low = "blue", high = "red")
+   coord_sf()

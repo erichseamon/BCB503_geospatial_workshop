@@ -69,6 +69,8 @@ ggplot() +
   theme(plot.title = element_text(hjust = 0.5, face = "bold"), plot.subtitle = element_text(hjust = 0.5)) + 
   scale_fill_gradientn(name = "NDVI", colours = green_colors(20))
 
+#add strip.position = "bottom" to facet_wrap to address "y" being cut off in "Day"
+
 # cleanup
 rm(raster_names, labels_names, green_colors)
 
@@ -155,6 +157,7 @@ brewer.pal(9, "YlGn")
 green_colors <- brewer.pal(9, "YlGn") %>%
   colorRampPalette()
 
+#red_colors <- brewer.pal(9, "RdBu") %>% colorRampPalette()
 
 #We can  tell the `colorRampPalette()` function how many discrete 
 #colors within this color range to create. In our case, we will 
@@ -211,10 +214,11 @@ raster_names
 #with the word "Day" followed by a space.
 
 raster_names  <- gsub("X", "", raster_names)
-raster_names <- sub("^[0]+", "", raster_names) 
-raster_names <- paste("Day ", raster_names, sep="")
 
-raster_names  <- gsub("X", "Day ", raster_names)
+#ERICH ADDED: wanna remove leading zeros?
+#raster_names <- gsub("^[0]+", "", raster_names) 
+
+raster_names <- paste("Day ", raster_names, sep="")
 raster_names
 
 
@@ -278,7 +282,12 @@ ggplot() +
  raster_names  <- gsub("Day","Julian Day ", raster_names)
  labels_names <- setNames(raster_names, unique(NDVI_HARV_stack_df$variable))
  
- brown_green_colors <- colorRampPalette(brewer.pal(9, "BrBG"))
+ brown_green_colors <- colorRampPalette(brewer.pal(9, c("Brown", "Green")))
+
+ #ERICH ADD custom palette
+ #custom_palette <- c("red", "yellow", "lightgreen", "darkgreen")
+ #custom_brown_green_colors <- colorRampPalette(custom_palette)(20)
+ 
  
  ggplot() +
    geom_raster(data = NDVI_HARV_stack_df , aes(x = x, y = y, fill = value)) +
@@ -287,7 +296,7 @@ ggplot() +
    theme_void() +
    theme(plot.title = element_text(hjust = 0.5, face = "bold"), 
    plot.subtitle = element_text(hjust = 0.5)) +
-   scale_fill_gradientn(name = "NDVI", colours = brown_green_colors(20))
+   scale_fill_gradientn(name = "NDVI", colours = brown_green_colors)
 
 #For NDVI data, the sequential color ramp is better than the divergent 
 #as it is more akin to the process of greening up, which starts off 

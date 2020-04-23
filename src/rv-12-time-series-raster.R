@@ -240,9 +240,7 @@ yr_11_daily_avg <- subset(har_met_daily,
 
 ggplot() +
   geom_point(data = yr_11_daily_avg, aes(jd, airt)) +
-
-#+ geom_point(data = yr_11_daily_avg, aes(jd, airtmax), color="red") + geom_point(data = #yr_11_daily_avg, aes(jd, airtmin), color="blue") +
-  
+  #geom_point(data = yr_11_daily_avg, aes(jd, airtmax), color="red") + geom_point(data = yr_11_daily_avg, aes(jd, airtmin), color="blue") +
   ggtitle("Daily Mean Air Temperature",
           subtitle = "NEON Harvard Forest Field Site") +
   xlab("Julian Day 2011") +
