@@ -54,7 +54,7 @@ library("dplyr")
 #our dataframe we could use the `select()` function. This will keep only the
 #variables you select.
 
-year_country_gdp <- select(gapminder, year, country, gdpPercap)
+year_country_gdp <- dplyr::select(gapminder, year, country, gdpPercap)
 
 
 #If we open up `year_country_gdp` we'll see that it only contains the year,

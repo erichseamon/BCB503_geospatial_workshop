@@ -62,7 +62,9 @@ gapminder_small <- filter(gapminder, year == 2007, continent == "Americas")
 #by default) and gdp per capita on the y-axis.
 
 ggplot(data = gapminder_small, aes(x = country, y = gdpPercap)) + 
-  geom_col()
+  geom_col() 
+
+#+ theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 
 #With this many bars plotted, it's impossible to read all of the 

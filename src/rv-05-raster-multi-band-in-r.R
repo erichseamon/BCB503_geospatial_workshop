@@ -56,7 +56,8 @@ RGB_band1_HARV
 
 #The number of bands associated with a
 #raster object can also be determined using the `nbands()` function: syntax is
-#`nbands(RGB_band1_HARV)`.
+
+nbands(RGB_band1_HARV)
 
 ### Image Raster Data Values
 
@@ -159,13 +160,12 @@ ggplot() +
 ggplot() +
   geom_histogram(data = RGB_stack_HARV_df, aes(HARV_RGB_Ortho.2))
 
-#ERICH ADDED: what would it look like if i plotted all three bands in one histogram plot?  What does this say about
-#the three bands?  
+#ERICH ADDED: what would it look like if i plotted all three bands in one histogram plot?  
 
-ggplot() +
-  geom_histogram(data = RGB_stack_HARV_df, aes(HARV_RGB_Ortho.1), fill = "red", alpha = .2) +
-  geom_histogram(data = RGB_stack_HARV_df, aes(HARV_RGB_Ortho.2), fill = "blue", alpha = .2) + 
-  geom_histogram(data = RGB_stack_HARV_df, aes(HARV_RGB_Ortho.3), fill = "green", alpha = .2)
+#ggplot() +
+#  geom_histogram(data = RGB_stack_HARV_df, aes(HARV_RGB_Ortho.1), fill = "red") +
+#  geom_histogram(data = RGB_stack_HARV_df, aes(HARV_RGB_Ortho.2), fill = "green") + 
+#  geom_histogram(data = RGB_stack_HARV_df, aes(HARV_RGB_Ortho.3), fill = "blue")
 
 #And a raster plot of the second band: 
 
@@ -250,7 +250,7 @@ plotRGB(RGB_stack_HARV,
 #1) First we use the `GDALinfo()` function to view the 
 #data attributes.
 
-GDALinfo("data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_Ortho_wNA.tif")
+GDALinfo("../data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_Ortho_wNA.tif")
 
 
 #2) From the output above, we see that there are `NoData` values
@@ -260,7 +260,7 @@ GDALinfo("data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_Ortho_wNA.t
  
 #4) To read in the file, we will use the `stack()` function: 
 
-HARV_NA <- stack("data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_Ortho_wNA.tif")
+HARV_NA <- stack("../data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_Ortho_wNA.tif")
 
 #5) We can plot the data with the `plotRGB()` function: 
 
@@ -276,7 +276,7 @@ plotRGB(HARV_NA,
 #black as the reflectance values are 0. The black edges in the 
 #other file are defined as -9999 and R renders them as NA.
 
-GDALinfo("data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_RGB_Ortho.tif")
+GDALinfo("../data/NEON-DS-Airborne-Remote-Sensing/HARV/RGB_Imagery/HARV_RGB_Ortho.tif")
 
 
 ## Data Tip

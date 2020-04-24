@@ -1,4 +1,4 @@
-#Title: rv-02-raster-l=plot.R
+#Title: rv-02-raster-plot.R
 #BCB503 Geospatial Workshop, April 23 and 24th, 2020
 #University of Idaho
 #Data Carpentry Geospatial Analysis
@@ -100,6 +100,12 @@ ggplot() +
   geom_raster(data = DSM_HARV_df , aes(x = x, y = y, fill = fct_elevation_2)) + 
   coord_quickmap()
 
+gridExtra::grid.arrange(ggplot() +
+                         geom_raster(data = DSM_HARV_df , aes(x = x, y = y, fill = fct_elevation_2)) + 
+                         coord_quickmap(), ggplot() +
+                         geom_raster(data = DSM_HARV_df , aes(x = x, y = y, fill = fct_elevation)) + 
+                         coord_quickmap())
+
 
 #The plot above uses the default colors inside `ggplot` for raster objects. 
 #We can specify our own colors to make the plot look a little nicer.
@@ -120,7 +126,7 @@ terrain.colors(3)
 ggplot() +
  geom_raster(data = DSM_HARV_df , aes(x = x, y = y,
                                       fill = fct_elevation_2)) + 
-    scale_fill_manual(values = terrain.colors(3)) + 
+    scale_fill_manual(values = terrain.colors(3)) +
     coord_quickmap()
 
 ### More Plot Formatting
@@ -140,6 +146,8 @@ ggplot() +
  geom_raster(data = DSM_HARV_df , aes(x = x, y = y,
                                       fill = fct_elevation_2)) + 
     scale_fill_manual(values = my_col, name = "Elevation") + 
+  xlab("UTM Westing Coordinate (m)") +
+  ylab("UTM Northing Coordinate (m)") +
     coord_quickmap()
 
 #Or we can also turn off the labels of both axes by 
@@ -174,7 +182,7 @@ ggplot() +
                                        fill = fct_elevation_6)) + 
      scale_fill_manual(values = my_col, name = "Elevation") + 
      ggtitle("Classified Elevation Map - NEON Harvard Forest Field Site") +
-     xlab("UTM Westing Coordinate (m)") +
+     xlab("UTM Easting Coordinate (m)") +
      ylab("UTM Northing Coordinate (m)") + 
      coord_quickmap()
 

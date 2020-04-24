@@ -240,6 +240,8 @@ RGB_stack <-
 
 RGB_2m <- raster::aggregate(RGB_stack, fact = 8, fun = median)
 
+#fact = number of cells in each direction h and v.  or i can give it two integers, or three if there are more than one layer
+
 # fix data values back to integer datatype
 
 values(RGB_2m) <- as.integer(round(values(RGB_2m)))

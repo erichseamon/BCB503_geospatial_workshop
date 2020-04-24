@@ -220,20 +220,21 @@ ggplot() +
 #We have now successfully draped the Digital Terrain Model on top of our
 #hillshade to produce a nice looking, textured map!
 
-## Challenge: Reproject, then Plot a Digital Terrain Model
+## Challenge: Reproject, then Plot a Digital SURFACE Model
 
 #Reproject the data as necessary to make things line up!
 
 ## Answers
 
  # import DSM
- DSM_SJER <- raster("data/NEON-DS-Airborne-Remote-Sensing/SJER/DSM/SJER_dsmCrop.tif")
+ DSM_SJER <- raster("../data/NEON-DS-Airborne-Remote-Sensing/SJER/DSM/SJER_dsmCrop.tif")
  # import DSM hillshade
  DSM_hill_SJER_WGS <-
- raster("data/NEON-DS-Airborne-Remote-Sensing/SJER/DSM/SJER_DSMhill_WGS84.tif")
+ raster("../data/NEON-DS-Airborne-Remote-Sensing/SJER/DSM/SJER_DSMhill_WGS84.tif")
  
  # reproject raster
- DTM_hill_UTMZ18N_SJER <- projectRaster(DSM_hill_SJER_WGS,
+ #ERICH FIXED : DTM_hill_UTMZ18N_SJER CHANGED to DSM_hill_UTMZ18N_SJER
+ DSM_hill_UTMZ18N_SJER <- projectRaster(DSM_hill_SJER_WGS,
                                    crs = crs(DSM_SJER),
                                    res = 1)
  

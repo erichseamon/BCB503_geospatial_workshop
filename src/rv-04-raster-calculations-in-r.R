@@ -149,6 +149,9 @@ ggplot(CHM_HARV_df) +
 #1) There are missing values in our data, so we need to specify 
 #`na.rm = TRUE`. 
 
+#ERICH ADDED What rows have NA in layer?
+CHM_HARV_df[is.na(CHM_HARV_df$layer),]
+
 min(CHM_HARV_df$layer, na.rm = TRUE)
 max(CHM_HARV_df$layer, na.rm = TRUE)
 
@@ -174,7 +177,7 @@ ggplot(CHM_HARV_df) +
 custom_bins <- c(0, 10, 20, 30, 40)
 CHM_HARV_df <- CHM_HARV_df %>%
                    mutate(canopy_discrete = cut(layer, breaks = custom_bins))
- 
+
 ggplot() +
    geom_raster(data = CHM_HARV_df , aes(x = x, y = y,
                                         fill = canopy_discrete)) + 
@@ -257,7 +260,7 @@ CHM_ov_HARV_df <- as.data.frame(CHM_ov_HARV, xy = TRUE)
 #value (`NAflag = -9999`. We will also tell R to overwrite 
 #any data that is already in a file of the same name. 
 
-writeRaster(CHM_ov_HARV, "CHM_HARV.tiff",
+writeRaster(CHM_ov_HARV, "../results/CHM_HARV.tiff",
             format="GTiff",
             overwrite=TRUE,
             NAflag=-9999)
@@ -341,7 +344,7 @@ ggplot(CHM_ov_SJER_df) +
  
 #3) Export the CHM object to a file: 
 
-writeRaster(CHM_ov_SJER, "chm_ov_SJER.tiff",
+writeRaster(CHM_ov_SJER, "../results/chm_ov_SJER.tiff",
              format = "GTiff",
              overwrite = TRUE,
              NAflag = -9999)
@@ -357,3 +360,10 @@ writeRaster(CHM_ov_SJER, "chm_ov_SJER.tiff",
  ggplot(CHM_ov_SJER_df) +
      geom_histogram(aes(layer))
 
+ #or
+ 
+ gridExtra::grid.arrange(ggplot(CHM_HARV_df) +
+                            geom_histogram(aes(layer)),
+                            ggplot(CHM_ov_SJER_df) +
+                            geom_histogram(aes(layer)))
+ 

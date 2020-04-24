@@ -176,7 +176,7 @@ CHM_plots_HARVcrop_df <- as.data.frame(CHM_plots_HARVcrop, xy = TRUE)
 ggplot() + 
    geom_raster(data = CHM_plots_HARVcrop_df, aes(x = x, y = y, fill = HARV_chmCrop)) + 
    scale_fill_gradientn(name = "Canopy Height", colors = terrain.colors(10)) + 
-   geom_sf(data = plot_locations_sp_HARV) + 
+   geom_sf(data = plot_locations_sp_HARV) +
    coord_sf()
 
 
